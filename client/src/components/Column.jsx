@@ -34,12 +34,7 @@ const Column = ({ columnId, title, tasks, onDeleteTask }) => {
                     <div
                         ref={provided.innerRef}
                         {...provided.droppableProps}
-                        className="tasks-list"
-                        style={{
-                            background: snapshot.isDraggingOver
-                                ? 'rgba(56, 189, 248, 0.05)'
-                                : 'transparent'
-                        }}
+                        className={`tasks-list ${snapshot.isDraggingOver ? 'dragging-over' : ''}`}
                     >
                         {tasks.length === 0 ? (
                             <div className="empty-state">
