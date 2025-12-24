@@ -3,6 +3,7 @@ import Board from './components/Board';
 import Auth from './components/Auth';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { socket, connectSocket, disconnectSocket } from './services/socket';
+import './App.css';
 
 function AppContent() {
   const { user, loading, logout, token } = useAuth();
@@ -97,88 +98,25 @@ function AppContent() {
   return (
     <div className="App">
       {showDisconnectToast && (
-        <div style={{
-          position: 'fixed',
-          bottom: '20px',
-          right: '20px',
-          backgroundColor: 'var(--danger)',
-          color: 'white',
-          padding: '12px 24px',
-          borderRadius: '8px',
-          boxShadow: '0 4px 6px rgba(0,0,0,0.3)',
-          zIndex: 1000,
-          display: 'flex',
-          alignItems: 'center',
-          gap: '10px',
-          fontWeight: '500',
-          animation: 'fadeIn 0.3s ease-out'
-        }}>
+        <div className="disconnect-toast">
           <span>⚠️</span> Connection lost. Reconnecting...
         </div>
       )}
 
-      <div style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: '0 2rem',
-        marginBottom: '2rem',
-        flexWrap: 'wrap',
-        gap: '1rem'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+      <div className="app-header">
+        <div className="app-header-left">
           <h1 style={{ margin: 0 }}>Collaborative Task Board</h1>
-          <div style={{
-            background: 'rgba(56, 189, 248, 0.2)',
-            color: 'var(--accent-color)',
-            padding: '8px 16px',
-            borderRadius: '20px',
-            fontSize: '0.9rem',
-            fontWeight: '600',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            border: '1px solid rgba(56, 189, 248, 0.3)'
-          }}>
-            <span style={{
-              display: 'block',
-              width: '8px',
-              height: '8px',
-              background: 'var(--accent-color)',
-              borderRadius: '50%',
-              boxShadow: '0 0 8px var(--accent-color)'
-            }}></span>
+          <div className="user-badge">
+            <span className="user-badge-dot"></span>
             {userCount} {userCount === 1 ? 'User' : 'Users'} Online
           </div>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <div style={{
-            color: '#94a3b8',
-            fontSize: '0.9rem'
-          }}>
-            Welcome, <strong style={{ color: '#38bdf8' }}>{user.username}</strong>
+        <div className="app-header-right">
+          <div className="user-info">
+            Welcome, <strong>{user.username}</strong>
           </div>
-          <button
-            onClick={handleLogout}
-            style={{
-              background: 'rgba(239, 68, 68, 0.2)',
-              color: '#fca5a5',
-              border: '1px solid rgba(239, 68, 68, 0.3)',
-              padding: '8px 16px',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              fontSize: '0.9rem',
-              fontWeight: '500',
-              transition: 'all 0.3s ease'
-            }}
-            onMouseOver={(e) => {
-              e.target.style.background = 'rgba(239, 68, 68, 0.3)';
-            }}
-            onMouseOut={(e) => {
-              e.target.style.background = 'rgba(239, 68, 68, 0.2)';
-            }}
-          >
+          <button onClick={handleLogout} className="logout-button">
             Logout
           </button>
         </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { DragDropContext } from '@hello-pangea/dnd';
 import Column from './Column';
 import { socket } from '../services/socket';
+import './Board.css';
 
 const INITIAL_COLUMNS = {
     todo: { title: 'To Do', items: [] },
@@ -122,26 +123,19 @@ const Board = () => {
     };
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', height: '100%', gap: '2rem' }}>
-            <form onSubmit={handleCreateTask} style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+        <div className="board-container">
+            <form onSubmit={handleCreateTask} className="task-input-form">
                 <input
                     type="text"
                     value={newTaskTitle}
                     onChange={(e) => setNewTaskTitle(e.target.value)}
                     placeholder="Add a new task..."
-                    style={{
-                        padding: '12px 16px',
-                        borderRadius: '8px',
-                        border: '1px solid #475569',
-                        background: '#1e293b',
-                        color: 'white',
-                        width: '300px'
-                    }}
+                    className="task-input"
                 />
-                <button type="submit" style={{ background: 'var(--accent-color)', color: '#0f172a' }}>Add Task</button>
+                <button type="submit" className="add-task-button">Add Task</button>
             </form>
 
-            <div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '20px', alignItems: 'flex-start', justifyContent: 'center' }}>
+            <div className="columns-container">
                 <DragDropContext onDragEnd={onDragEnd}>
                     {Object.entries(columns).map(([id, col]) => (
                         <Column key={id} columnId={id} title={col.title} tasks={col.items} onDeleteTask={handleDeleteTask} />
