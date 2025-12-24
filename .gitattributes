@@ -1,0 +1,9 @@
+# Git attributes for the repository
+
+# Ignore example/template files from GitHub secret scanning
+*.example linguist-generated=true
+.env.example linguist-generated=true
+.env.*.example linguist-generated=true
+
+# Mark documentation as documentation
+*.md linguist-documentation=true
