@@ -7,15 +7,27 @@ const { Server } = require('socket.io');
 
 const app = express();
 const server = http.createServer(app);
+
+// CORS configuration for both development and production
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'https://real-time-collaborative-taskboard.vercel.app'
+];
+
 const io = new Server(server, {
   cors: {
-    origin: "*", // Allow all for now, lock down later
-    methods: ["GET", "POST", "PUT", "DELETE"]
+    origin: allowedOrigins,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
   }
 });
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
 app.use(express.json());
 
 // Database Connection - MongoDB Atlas
