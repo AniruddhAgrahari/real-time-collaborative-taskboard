@@ -22,9 +22,9 @@ const Column = ({ columnId, title, tasks, onDeleteTask }) => {
     const config = columnConfig[columnId] || columnConfig.todo;
 
     return (
-        <div className="column">
+        <div className={`column ${columnId}`}>
             <div className="column-header">
-                <span className="column-icon">{config.icon}</span>
+                <span className="column-icon"></span>
                 <h3 className="column-title">{title}</h3>
                 <span className="column-count">{tasks.length}</span>
             </div>
