@@ -147,6 +147,28 @@
     word-break: break-word;
 }
 
+.drag-handle {
+    display: grid;
+    grid-template-columns: repeat(2, 4px);
+    grid-template-rows: repeat(3, 4px);
+    gap: 2px;
+    margin-right: 8px;
+    opacity: 0.4;
+    cursor: grab;
+    flex-shrink: 0;
+}
+
+.task-card:hover .drag-handle {
+    opacity: 0.8;
+}
+
+.drag-handle .dots {
+    width: 3px;
+    height: 3px;
+    background-color: var(--text-secondary);
+    border-radius: 50%;
+}
+
 .delete-button {
     background: rgba(239, 68, 68, 0.15);
     color: #fca5a5;

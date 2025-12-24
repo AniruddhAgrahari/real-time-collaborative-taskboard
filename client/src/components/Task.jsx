@@ -11,6 +11,14 @@ const Task = ({ task, index, onDelete }) => {
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                 >
+                    <div className="drag-handle">
+                        <div className="dots"></div>
+                        <div className="dots"></div>
+                        <div className="dots"></div>
+                        <div className="dots"></div>
+                        <div className="dots"></div>
+                        <div className="dots"></div>
+                    </div>
                     <div className="task-title">{task.title}</div>
                     <button
                         onClick={(e) => {
