@@ -3,24 +3,7 @@ import { Droppable } from '@hello-pangea/dnd';
 import Task from './Task';
 import './Column.css';
 
-const columnConfig = {
-    todo: {
-        icon: '🔴',
-        title: 'To Do'
-    },
-    inprogress: {
-        icon: '🟡',
-        title: 'In Progress'
-    },
-    done: {
-        icon: '🟢',
-        title: 'Done'
-    }
-};
-
 const Column = ({ columnId, title, tasks, onDeleteTask }) => {
-    const config = columnConfig[columnId] || columnConfig.todo;
-
     return (
         <div className={`column ${columnId}`}>
             <div className="column-header">
@@ -30,16 +13,14 @@ const Column = ({ columnId, title, tasks, onDeleteTask }) => {
             </div>
 
             <Droppable droppableId={columnId}>
-                {(provided, snapshot) => (
+                {(provided) => (
                     <div
                         ref={provided.innerRef}
                         {...provided.droppableProps}
-                        className={`tasks-list ${snapshot.isDraggingOver ? 'dragging-over' : ''}`}
+                        className="tasks-list"
                     >
                         {tasks.length === 0 ? (
-                            <div className="empty-state">
-                                No tasks yet
-                            </div>
+                            <div className="empty-state">No tasks yet</div>
                         ) : (
                             tasks.map((task, index) => (
                                 <Task

@@ -167,9 +167,7 @@ button:focus-visible {
   }
 }
 
-.task-card {
-  animation: fadeIn 0.3s ease-out;
-}
+/* Animation removed from task-card to fix drag-and-drop */
 
 /* Mobile-specific utilities */
 .mobile-only {

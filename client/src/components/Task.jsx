@@ -4,27 +4,20 @@ import { Draggable } from '@hello-pangea/dnd';
 const Task = ({ task, index, onDelete }) => {
     return (
         <Draggable draggableId={task._id} index={index}>
-            {(provided, snapshot) => (
+            {(provided) => (
                 <div
-                    className={`task-card ${snapshot.isDragging ? 'dragging' : ''}`}
+                    className="task-card"
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
-                    style={{
-                        ...provided.draggableProps.style,
-                    }}
                 >
-                    <div className="task-title">
-                        {task.title}
-                    </div>
+                    <div className="task-title">{task.title}</div>
                     <button
                         onClick={(e) => {
                             e.stopPropagation();
                             onDelete(task._id);
                         }}
                         className="delete-button"
-                        title="Delete task"
-                        aria-label="Delete task"
                     >
                         ×
                     </button>
