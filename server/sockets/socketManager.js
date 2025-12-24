@@ -1,31 +1,59 @@
 module.exports = (io) => {
     const Task = require('../models/Task');
+    const jwt = require('jsonwebtoken');
+
+    // Socket.io authentication middleware
+    io.use((socket, next) => {
+        const token = socket.handshake.auth.token;
+
+        if (!token) {
+            return next(new Error('Authentication error: No token provided'));
+        }
+
+        try {
+            const decoded = jwt.verify(
+                token,
+                process.env.JWT_SECRET || 'your-secret-key-change-in-production'
+            );
+            socket.userId = decoded.userId;
+            next();
+        } catch (error) {
+            next(new Error('Authentication error: Invalid token'));
+        }
+    });
 
     io.on('connection', (socket) => {
-        console.log('New client connected:', socket.id);
+        console.log('New client connected:', socket.id, 'User:', socket.userId);
 
         // Broadcast user count on connection (count unique connections)
         const connectedSockets = io.sockets.sockets.size;
         io.emit('onlineUsers', connectedSockets);
 
-        // Initial load
+        // Initial load - get tasks for this user only
         socket.on('getTasks', async () => {
             try {
-                const tasks = await Task.find().sort({ order: 1 });
+                const tasks = await Task.find({ user: socket.userId }).sort({ order: 1 });
                 socket.emit('tasks', tasks);
             } catch (err) {
                 console.error(err);
+                socket.emit('error', { message: 'Failed to fetch tasks' });
             }
         });
 
-        // Create Task
+        // Create Task - associate with user
         socket.on('createTask', async (taskData) => {
             try {
-                const newTask = await Task.create(taskData);
-                // Broadcast to all clients including sender
-                io.emit('taskCreated', newTask);
+                const newTask = await Task.create({
+                    ...taskData,
+                    user: socket.userId
+                });
+                // Only emit to this user's sockets
+                io.to(socket.userId).emit('taskCreated', newTask);
+                // Also emit to the sender
+                socket.emit('taskCreated', newTask);
             } catch (err) {
                 console.error(err);
+                socket.emit('error', { message: 'Failed to create task' });
             }
         });
 

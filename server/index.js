@@ -46,10 +46,15 @@ mongoose.connect(mongoUri)
     process.exit(1);
   });
 
-// Routes (Placeholder)
+// Routes
+const authRoutes = require('./routes/auth');
+
 app.get('/', (req, res) => {
   res.send('Task Board API Running');
 });
+
+// API Routes
+app.use('/api/auth', authRoutes);
 
 // Socket.io
 require('./sockets/socketManager')(io);
