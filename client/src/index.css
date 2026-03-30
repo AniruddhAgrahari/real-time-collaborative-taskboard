@@ -1,36 +1,94 @@
+/* ===== THEME VARIABLES ===== */
 :root {
+  /* Dark Theme (Default) */
   --bg-color: #0f172a;
-  /* Slate 900 */
+  --bg-secondary: #1e293b;
   --column-bg: #1e293b;
-  /* Slate 800 */
   --card-bg: #334155;
-  /* Slate 700 */
+  --card-bg-hover: #3f4f63;
   --text-primary: #f8fafc;
-  /* Slate 50 */
   --text-secondary: #94a3b8;
-  /* Slate 400 */
+  --text-muted: #64748b;
   --accent-color: #38bdf8;
-  /* Sky 400 */
   --accent-hover: #0ea5e9;
-  /* Sky 500 */
+  --accent-glow: rgba(56, 189, 248, 0.3);
   --danger: #ef4444;
-  /* Red 500 */
+  --danger-hover: #dc2626;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --border-color: rgba(148, 163, 184, 0.1);
+  --border-accent: rgba(56, 189, 248, 0.3);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.5);
+  --glass-bg: rgba(30, 41, 59, 0.7);
+  --glass-border: rgba(148, 163, 184, 0.1);
 
   font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: dark;
   color: var(--text-primary);
   background-color: var(--bg-color);
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  /* Touch-friendly tap targets */
   -webkit-tap-highlight-color: rgba(56, 189, 248, 0.2);
+}
+
+/* Light Theme */
+[data-theme="light"] {
+  --bg-color: #f1f5f9;
+  --bg-secondary: #e2e8f0;
+  --column-bg: #ffffff;
+  --card-bg: #f8fafc;
+  --card-bg-hover: #f1f5f9;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --accent-color: #0ea5e9;
+  --accent-hover: #0284c7;
+  --accent-glow: rgba(14, 165, 233, 0.2);
+  --danger: #dc2626;
+  --danger-hover: #b91c1c;
+  --success: #059669;
+  --warning: #d97706;
+  --border-color: rgba(15, 23, 42, 0.1);
+  --border-accent: rgba(14, 165, 233, 0.3);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.15);
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(15, 23, 42, 0.1);
+  color-scheme: light;
+}
+
+/* Dark Theme explicit */
+[data-theme="dark"] {
+  --bg-color: #0f172a;
+  --bg-secondary: #1e293b;
+  --column-bg: #1e293b;
+  --card-bg: #334155;
+  --card-bg-hover: #3f4f63;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --accent-color: #38bdf8;
+  --accent-hover: #0ea5e9;
+  --accent-glow: rgba(56, 189, 248, 0.3);
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --border-color: rgba(148, 163, 184, 0.1);
+  --border-accent: rgba(56, 189, 248, 0.3);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.5);
+  --glass-bg: rgba(30, 41, 59, 0.7);
+  --glass-border: rgba(148, 163, 184, 0.1);
+  color-scheme: dark;
 }
 
 * {
@@ -44,9 +102,9 @@ body {
   min-height: 100vh;
   background-color: var(--bg-color);
   overflow-x: hidden;
-  /* Prevent text selection on drag */
   -webkit-user-select: none;
   user-select: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Allow text selection in inputs */
@@ -88,22 +146,23 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
+  border-radius: 10px;
   border: 1px solid transparent;
   padding: 0.75em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--card-bg);
+  color: var(--text-primary);
   cursor: pointer;
-  transition: all 0.25s ease;
-  /* Touch-friendly minimum size */
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   min-height: 44px;
   min-width: 44px;
 }
 
 button:hover {
   border-color: var(--accent-color);
+  background-color: var(--card-bg-hover);
 }
 
 button:active {
@@ -112,7 +171,8 @@ button:active {
 
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-glow);
 }
 
 /* Scrollbar */
@@ -216,5 +276,40 @@ button:focus-visible {
     padding-left: max(0px, env(safe-area-inset-left));
     padding-right: max(0px, env(safe-area-inset-right));
     padding-bottom: max(0px, env(safe-area-inset-bottom));
+  }
+}
+
+/* ===== SMOOTH THEME TRANSITIONS ===== */
+*,
+*::before,
+*::after {
+  transition-property: background-color, border-color, color, box-shadow;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+}
+
+/* Exclude task cards from theme transitions - let DnD library handle them */
+.task-card {
+  transition: none;
+}
+
+/* Allow hover effects via pseudo-states instead */
+.task-card .delete-button {
+  transition: opacity 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .user-badge-dot,
+  .column-icon {
+    animation: none;
   }
 }

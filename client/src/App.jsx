@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Board from './components/Board';
 import Auth from './components/Auth';
+import ThemeToggle from './components/ThemeToggle';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { socket, connectSocket, disconnectSocket } from './services/socket';
 import './App.css';
 
@@ -113,6 +115,7 @@ function AppContent() {
         </div>
 
         <div className="app-header-right">
+          <ThemeToggle />
           <div className="user-info">
             Welcome, <strong>{user.username}</strong>
           </div>
@@ -129,9 +132,11 @@ function AppContent() {
 
 function App() {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 
